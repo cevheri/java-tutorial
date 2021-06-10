@@ -2,6 +2,9 @@ package com.cevher.java.generic;
 
 import java.util.Arrays;
 
+/**
+ * Type-safe Generic List
+ */
 public class CustomGenericList {
 
     public static void main(String[] args) {
@@ -13,7 +16,7 @@ public class CustomGenericList {
         // gen.add(1); compile time error :)
         for (int i = 0; i < strings.size(); ++i) {
             String str = strings.get(i);
-            System.out.println("String value: "+str);
+            System.out.println("String value: " + str);
         }
 
         GenericList<Integer> integers = new GenericList<>();
@@ -26,6 +29,11 @@ public class CustomGenericList {
             System.out.println("Integer value:" + num);
         }
 
+        System.out.println(strings.getClass() == integers.getClass()); // TRUE same runtime GenericList class
+
+        strings.clear();
+        integers.clear();
+
     }
 }
 
@@ -34,16 +42,16 @@ public class CustomGenericList {
  */
 class GenericList<E> {
     private int size;
-    private E[] elements;
+    private Object[] elements;
 
     public GenericList() {
-        this.elements = (E[]) new Object[10];
+        this.elements = new Object[10];
         this.size = 0;
     }
 
     public void add(E newGenElement) {
-        if (size >= elements.length) {
-            E[] tempElements = (E[]) new Object[size + 10];
+        if (this.size >= elements.length) {
+            Object[] tempElements = new Object[size + 10];
             for (int i = 0; i < size; i++) {
                 tempElements[i] = elements[i];
             }
@@ -54,15 +62,15 @@ class GenericList<E> {
     }
 
     public void clear() {
-        elements = (E[]) new Object[10];
+        elements = new Object[10];
     }
 
     public E get(int index) {
         if (index >= size) {
             throw new IndexOutOfBoundsException(
-                    String.format("Index:%s Size:%s", index, size));
+                    String.format("Index:%d Size:%d", index, size));
         }
-        return elements[index];
+        return (E)elements[index];
     }
 
     private int getSize() {
