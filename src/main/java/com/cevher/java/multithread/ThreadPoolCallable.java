@@ -3,7 +3,7 @@ package com.cevher.java.multithread;
 import java.util.concurrent.*;
 
 class CallableWorkerThread implements Callable<String> {
-    private int workerNumber;
+    private final int workerNumber;
 
     CallableWorkerThread(int workerNumber) {
         this.workerNumber = workerNumber;
@@ -14,18 +14,18 @@ class CallableWorkerThread implements Callable<String> {
             System.out.printf("Worker %d: %d\n", workerNumber, i);
             try {
                 Thread.sleep((int)(Math.random() * 1000));
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
         return "worker " + workerNumber;
     }
 }
 public class ThreadPoolCallable {
     public static void main(String[] args) {
-        int numWorkers = Integer.parseInt(args[0]);
+        int numWorkers = 3;
 
         ExecutorService pool = Executors.newCachedThreadPool();
         CallableWorkerThread[] workers = new CallableWorkerThread[numWorkers];
-        Future[] futures = new Future[numWorkers];
+        var futures = new Future[numWorkers];
 
         for (int i = 0; i < numWorkers; ++i) {
             workers[i] = new CallableWorkerThread(i + 1);
