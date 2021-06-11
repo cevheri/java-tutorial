@@ -37,7 +37,7 @@ public class CustomTime {
 }
 /**
  * The Time class models a time instance with second, minute and hour.
- * This class performs input validations.
+ * This class performs input validations using exception handling.
  */
 class Time {
     // The private instance variables - with input validations.
@@ -53,8 +53,7 @@ class Time {
         if (second >=0 && second <= 59) {
             this.second = second;
         } else {
-            this.second = 0;  // Set to 0 and print error message
-            System.out.println("error: invalid second");
+            throw new IllegalArgumentException("invalid second");
         }
     }
     /** Sets the minute to the given value with input validation */
@@ -62,8 +61,7 @@ class Time {
         if (minute >=0 && minute <= 59) {
             this.minute = minute;
         } else {
-            this.minute = 0;
-            System.out.println("error: invalid minute");
+            throw new IllegalArgumentException("invalid minute");
         }
     }
     /** Sets the hour to the given value with input validation */
@@ -71,8 +69,7 @@ class Time {
         if (hour >=0 && hour <= 23) {
             this.hour = hour;
         } else {
-            this.hour = 0;
-            System.out.println("error: invalid hour");
+            throw new IllegalArgumentException("invalid hour");
         }
     }
 
