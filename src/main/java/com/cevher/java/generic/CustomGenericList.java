@@ -13,7 +13,9 @@ public class CustomGenericList {
         strings.add("Second Gen Val");
         strings.add("Third Gen Val");
         System.out.println(strings); // [first Gen Val, Second Gen Val, Third Gen Val]
-        // gen.add(1); compile time error :)
+
+        // strings.add(1); //compile time error :)
+
         for (int i = 0; i < strings.size(); ++i) {
             String str = strings.get(i);
             System.out.println("String value: " + str);
