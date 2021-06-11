@@ -37,27 +37,66 @@ public class CustomTime {
 }
 /**
  * The Time class models a time instance with second, minute and hour.
- * This class does not perform input validation for second, minute and hour.
+ * This class performs input validations.
  */
 class Time {
-    // The private instance variables
-    private int second, minute, hour;
+    // The private instance variables - with input validations.
+    private int second;  // valid range is [0, 59]
+    private int minute;  // valid range is [0, 59]
+    private int hour;    // valid range is [0, 23]
 
-    // The constructors (overloaded)
-    /** Constructs a Time instance with the given second, minute and hour. No input validation */
-    public Time(int second, int minute, int hour) {
-        this.second = second;
-        this.minute = minute;
-        this.hour = hour;
+    // Input validations are done in the setters.
+    // All the other methods (such as constructors and setTime()) invoke
+    //   these setters to perform input validations to avoid code duplication.
+    /** Sets the second to the given value with input validation */
+    public void setSecond(int second) {
+        if (second >=0 && second <= 59) {
+            this.second = second;
+        } else {
+            this.second = 0;  // Set to 0 and print error message
+            System.out.println("error: invalid second");
+        }
     }
-    /** Constructs a Time instance with the default values */
-    public Time() {  // the default constructor
+    /** Sets the minute to the given value with input validation */
+    public void setMinute(int minute) {
+        if (minute >=0 && minute <= 59) {
+            this.minute = minute;
+        } else {
+            this.minute = 0;
+            System.out.println("error: invalid minute");
+        }
+    }
+    /** Sets the hour to the given value with input validation */
+    public void setHour(int hour) {
+        if (hour >=0 && hour <= 23) {
+            this.hour = hour;
+        } else {
+            this.hour = 0;
+            System.out.println("error: invalid hour");
+        }
+    }
+
+    /** Sets second, minute and hour to the given values with input validation */
+    public void setTime(int second, int minute, int hour) {
+        // Invoke setters to do input validation
+        this.setSecond(second);
+        this.setMinute(minute);
+        this.setHour(hour);
+    }
+
+    /** Constructs a Time instance with the given values with input validation */
+    public Time(int second, int minute, int hour) {
+        // Invoke setters to do input validation
+        this.setTime(second, minute, hour);
+    }
+    /** Constructs a Time instance with default values */
+    public Time() {  // The default constructor
         this.second = 0;
         this.minute = 0;
         this.hour = 0;
     }
 
-    // The public getters/setters for the private variables.
+    // The public getters
     /** Returns the second */
     public int getSecond() {
         return this.second;
@@ -70,49 +109,25 @@ class Time {
     public int getHour() {
         return this.hour;
     }
-    /** Sets the second. No input validation */
-    public void setSecond(int second) {
-        this.second = second;
-    }
-    /** Sets the minute. No input validation */
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-    /** Sets the hour. No input validation */
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
 
-    /** Returns a self-descriptive string in the form of  "hh:mm:ss" with leading zeros */
+    /** Returns a self-descriptive string in the form of "hh:mm:ss" with leading zeros */
     public String toString() {
-        // Use built-in function String.format() to form a formatted String
         return String.format("%02d:%02d:%02d", hour, minute, second);
-        // Specifier "0" to print leading zeros, if available.
     }
-
-    /** Sets second, minute and hour to the given values */
-    public void setTime(int second, int minute, int hour) {
-        // No input validation
-        this.second = second;
-        this.minute = minute;
-        this.hour = hour;
-    }
-
-    /** Advances this Time instance by one second, and returns this instance to support chaining */
+    /** Advances this Time instance by one second and returns this instance to support chaining */
     public Time nextSecond() {
         ++second;
-        if (second >= 60) {
+        if (second == 60) {  // We are sure that second <= 60 here because of the input validation
             second = 0;
             ++minute;
-            if (minute >= 60) {
+            if (minute == 60) {
                 minute = 0;
                 ++hour;
-                if (hour >= 24) {
+                if (hour == 24) {
                     hour = 0;
                 }
             }
         }
-        return this;   // Return "this" instance, to support chaining operations
-        // e.g., t1.nextSecond().nextSecond()
+        return this;   // Return this instance, to support chaining
     }
 }
