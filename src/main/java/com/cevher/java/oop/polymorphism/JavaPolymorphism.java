@@ -1,8 +1,6 @@
-package com.cevher.java.polymorphism;
+package com.cevher.java.oop.polymorphism;
 
 // ref: https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaGeneric.html
-
-import java.util.ArrayList;
 
 public class JavaPolymorphism {
     public static void main(String[] args) {
