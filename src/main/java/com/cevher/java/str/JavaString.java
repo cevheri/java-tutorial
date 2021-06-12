@@ -1,4 +1,4 @@
-package com.cevher.java;
+package com.cevher.java.str;
 
 
 /**
